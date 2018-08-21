@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+        <variable
+            name="main"
+            type="model.Main"/>
+        <variable
+            name="sys"
+            type="model.Sys"/>
+        <variable
+            name="eventListener"
+            type="interfacelisteners.RefreshEventListener"/>
+    </data>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ScrollView
+            android:id="@+id/scrollview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_above="@+id/refresh_button">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:id="@+id/image_temp"
+                        android:layout_width="110dp"
+                        android:layout_height="100dp"
+                        android:src="@drawable/ic_temperature" />
+
+                    <TextView
+                        android:id="@+id/temp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="30dp"
+                        android:text="@{String.valueOf(main.temp)}" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:id="@+id/image_humidity"
+                        android:layout_width="110dp"
+                        android:layout_height="100dp"
+                        android:src="@drawable/ic_humidity" />
+
+                    <TextView
+                        android:id="@+id/humidity"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="30dp"
+                        android:text="@{String.valueOf(main.humidity)}" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:id="@+id/image_sun_rise"
+                        android:layout_width="110dp"
+                        android:layout_height="100dp"
+                        android:src="@drawable/ic_sunrise" />
+
+                    <TextView
+                        android:id="@+id/sunrise"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="30dp"
+                        android:text="@{String.valueOf(sys.sunrise)}" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:id="@+id/image_sunset"
+                        android:layout_width="110dp"
+                        android:layout_height="100dp"
+                        android:src="@drawable/ic_sun_set" />
+
+                    <TextView
+                        android:id="@+id/sunset"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="30dp"
+                        android:text="@{String.valueOf(sys.sunset)}" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:id="@+id/image_sea_level"
+                        android:layout_width="110dp"
+                        android:layout_height="100dp"
+                        android:src="@drawable/ic_sea_level" />
+
+                    <TextView
+                        android:id="@+id/sea_level"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="30dp"
+                        android:text="@{String.valueOf(main.seaLevel)}" />
+
+                </LinearLayout>
+            </LinearLayout>
+        </ScrollView>
+
+        <Button
+            android:id="@+id/refresh_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:background="@color/colorPrimary"
+            android:text="refresh"
+            android:onClick="@{(v) -> eventListener.onClickRefresh(v)}"
+            android:textColor="@android:color/white" />
+    </RelativeLayout>
+
+</layout>
