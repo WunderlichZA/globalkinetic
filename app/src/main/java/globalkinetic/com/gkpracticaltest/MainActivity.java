@@ -20,11 +20,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.Toast;
 
 import globalkinetic.com.gkpracticaltest.databinding.ActivityMainBinding;
 import interfacelisteners.RefreshEventListener;
+import model.Weather;
 import util.ConnectionManager;
 import viewmodel.WeatherViewModel;
 
@@ -39,8 +39,6 @@ public class MainActivity extends AppCompatActivity implements LocationListener,
     Location location = null;
     private String provider;
 
-    private Button refreshButton;
-
     private ActivityMainBinding mainBinding;
     WeatherViewModel weatherViewModel;
 
@@ -51,16 +49,7 @@ public class MainActivity extends AppCompatActivity implements LocationListener,
         weatherViewModel = ViewModelProviders.of(this).get(WeatherViewModel.class);
         mainBinding = DataBindingUtil.setContentView(this, R.layout.activity_main);
         mainBinding.setLifecycleOwner(this);
-
-
-
-        refreshButton = findViewById(R.id.refresh_button);
-        refreshButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //getLocationManager();
-            }
-        });
+        mainBinding.setEventListener(this);
     }
 
     @Override
@@ -152,26 +141,15 @@ public class MainActivity extends AppCompatActivity implements LocationListener,
         locationManager.requestLocationUpdates(provider, 400, 1, this);
         location = locationManager.getLastKnownLocation(provider);
 
-        // Check for internet connection
-        if(ConnectionManager.canConnect(this)){
-            // Initialize the location fields
-            if (location != null) {
-                onLocationChanged(location);
-                makeHttpCall();
-            }
-        }else{
-            // we can't connect
-            // show no connection layout
-            Toast.makeText(MainActivity.this, "Cannot connect.\nPlease check your internet connection",
-                    Toast.LENGTH_LONG).show();
+        // Initialize the location fields
+        if (location != null) {
+            onLocationChanged(location);
+            makeHttpCall();
         }
     }
 
     public void makeHttpCall(){
 
-//        String lat = String.valueOf(location.getLatitude());
-//        String lon = String.valueOf(location.getLongitude());
-        // show a progress dialog while data is being fetched
         final ProgressDialog dialog;
         dialog = new ProgressDialog(MainActivity.this);
         dialog.setTitle("Loading");
@@ -221,6 +199,18 @@ public class MainActivity extends AppCompatActivity implements LocationListener,
     public void onProviderDisabled(String s) {
         Toast.makeText(this, provider + " disabled",
                 Toast.LENGTH_SHORT).show();
+    }
 
+    @Override
+    public void onClickRefresh() {
+        // Check for internet connection
+        if(ConnectionManager.canConnect(this)){
+            checkForPermissions();
+        }else{
+            // we can't connect
+            // show no connection layout
+            Toast.makeText(MainActivity.this, "Cannot connect.\nPlease check your internet connection",
+                    Toast.LENGTH_LONG).show();
+        }
     }
 }

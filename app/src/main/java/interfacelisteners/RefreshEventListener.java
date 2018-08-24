@@ -4,5 +4,5 @@ import android.view.View;
 
 public interface RefreshEventListener {
 
-    public void onClickRefresh(View view);
+    public void onClickRefresh();
 }
