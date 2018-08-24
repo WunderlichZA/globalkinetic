@@ -138,7 +138,7 @@
             android:layout_alignParentBottom="true"
             android:background="@color/colorPrimary"
             android:text="refresh"
-            android:onClick="@{(v) -> eventListener.onClickRefresh(v)}"
+            android:onClick="@{() -> eventListener.onClickRefresh()}"
             android:textColor="@android:color/white" />
     </RelativeLayout>
 
