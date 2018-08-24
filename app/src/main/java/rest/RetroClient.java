@@ -32,17 +32,8 @@ public class RetroClient {
         return retrofit;
     }
 
-    /**
-     * Get API Service
-     *
-     * @return API Service
-     */
-    public static ApiService getApiService(){
-        return getRetrofitInstance().create(ApiService.class);
-    }
 
     public LiveData<WeatherModel> getWeatherUpdate(int lat, int lon, String apiKey){
-        final WeatherModel weatherModel = new WeatherModel();
         final MutableLiveData<WeatherModel> weatherModelMutableLiveData = new MutableLiveData<>();
         getRetrofitInstance().create(ApiService.class).getWeatherUpdate(lat, lon, apiKey)
                 .enqueue(new Callback<WeatherModel>() {
